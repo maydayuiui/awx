@@ -141,22 +141,6 @@ export default [ 'ProcessErrors', 'CredentialTypeModel', 'TemplatesStrings', '$f
                             activeTab = activeTab || vm.steps.inventory.tab;
                             order++;
                         }
-                        if (vm.promptDataClone.launchConf.ask_credential_on_launch ||
-                            (_.has(vm, 'promptDataClone.prompts.credentials.passwords.vault') &&
-                            vm.promptDataClone.prompts.credentials.passwords.vault.length > 0) ||
-                            _.has(vm, 'promptDataClone.prompts.credentials.passwords.ssh_key_unlock') ||
-                            _.has(vm, 'promptDataClone.prompts.credentials.passwords.become_password') ||
-                            _.has(vm, 'promptDataClone.prompts.credentials.passwords.ssh_password')
-                        ) {
-                            vm.steps.credential.includeStep = true;
-                            vm.steps.credential.tab = {
-                                _active: order === 1 ? true : false,
-                                _disabled: (order === 1 || vm.readOnlyPrompts) ? false : true,
-                                order: order
-                            };
-                            activeTab = activeTab || vm.steps.credential.tab;
-                            order++;
-                        }
                         if(vm.promptDataClone.launchConf.ask_verbosity_on_launch || vm.promptDataClone.launchConf.ask_job_type_on_launch || vm.promptDataClone.launchConf.ask_limit_on_launch || vm.promptDataClone.launchConf.ask_tags_on_launch || vm.promptDataClone.launchConf.ask_skip_tags_on_launch || (vm.promptDataClone.launchConf.ask_variables_on_launch && !vm.promptDataClone.launchConf.ignore_ask_variables) || vm.promptDataClone.launchConf.ask_diff_mode_on_launch || vm.promptDataClone.launchConf.ask_scm_branch_on_launch) {
                             vm.steps.other_prompts.includeStep = true;
                             vm.steps.other_prompts.tab = {
@@ -182,6 +166,22 @@ export default [ 'ProcessErrors', 'CredentialTypeModel', 'TemplatesStrings', '$f
                                 order: order
                             };
                             activeTab = activeTab || vm.steps.survey.tab;
+                            order++;
+                        }
+                        if (vm.promptDataClone.launchConf.ask_credential_on_launch ||
+                            (_.has(vm, 'promptDataClone.prompts.credentials.passwords.vault') &&
+                            vm.promptDataClone.prompts.credentials.passwords.vault.length > 0) ||
+                            _.has(vm, 'promptDataClone.prompts.credentials.passwords.ssh_key_unlock') ||
+                            _.has(vm, 'promptDataClone.prompts.credentials.passwords.become_password') ||
+                            _.has(vm, 'promptDataClone.prompts.credentials.passwords.ssh_password')
+                        ) {
+                            vm.steps.credential.includeStep = true;
+                            vm.steps.credential.tab = {
+                                _active: order === 1 ? true : false,
+                                _disabled: (order === 1 || vm.readOnlyPrompts) ? false : true,
+                                order: order
+                            };
+                            activeTab = activeTab || vm.steps.credential.tab;
                             order++;
                         }
                         vm.steps.preview.tab.order = order;
